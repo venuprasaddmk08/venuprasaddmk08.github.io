@@ -40,6 +40,16 @@
     from{background-position-x:0;}
     to{background-position-x:-1600px;}
   }
+
+  /* SCROLL REVEAL */
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1);
+  }
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+  }
   a{color:inherit; text-decoration:none;}
   ::selection{background:var(--accent); color:var(--bg);}
 
@@ -229,13 +239,13 @@
 
 <section id="about">
   <div class="section-inner">
-    <div class="section-index"><span class="num">01</span><span class="label">Who I Am</span></div>
+    <div class="section-index reveal"><span class="num">01</span><span class="label">Who I Am</span></div>
     <div class="about-layout">
       <div class="about-text">
-        <p class="lede">"I love building things — both hardware and software — and the challenge of making them work together."</p>
-        <p class="first-para">I am a first-year Artificial Intelligence and Data Science student at Karunya University. My first real project was an AI Voice Assistant built on a Raspberry Pi 4, designed to answer questions about equipment at <strong>KIDS — Karunya Innovation and Design Studio</strong>.</p>
-        <p>Building it taught me a lot about debugging real hardware-software systems, and got me hooked on working at the intersection of AI and embedded devices. I am always looking for new projects to learn from — read on for the details, or get in touch below.</p>
-        <div class="pull-tags">
+        <p class="lede reveal">"I love building things — both hardware and software — and the challenge of making them work together."</p>
+        <p class="first-para reveal" style="transition-delay:.08s">I am a first-year Artificial Intelligence and Data Science student at Karunya University. My first real project was an AI Voice Assistant built on a Raspberry Pi 4, designed to answer questions about equipment at <strong>KIDS — Karunya Innovation and Design Studio</strong>.</p>
+        <p class="reveal" style="transition-delay:.16s">Building it taught me a lot about debugging real hardware-software systems, and got me hooked on working at the intersection of AI and embedded devices. I am always looking for new projects to learn from — read on for the details, or get in touch below.</p>
+        <div class="pull-tags reveal" style="transition-delay:.24s">
           <span>AI & Data Science</span>
           <span>Hardware + Software</span>
           <span>Karunya University</span>
@@ -247,10 +257,10 @@
 
 <section id="project">
   <div class="section-inner">
-    <div class="section-index"><span class="num">02</span><span class="label">Featured Build</span></div>
+    <div class="section-index reveal"><span class="num">02</span><span class="label">Featured Build</span></div>
     <div class="project-head">
-      <h2>KITS Helper</h2>
-      <p class="dek">A voice-activated assistant that gives the KIDS studio a spoken answer to any equipment question — built end to end on a Raspberry Pi 4.</p>
+      <h2 class="reveal">KITS Helper</h2>
+      <p class="dek reveal" style="transition-delay:.08s">A voice-activated assistant that gives the KIDS studio a spoken answer to any equipment question — built end to end on a Raspberry Pi 4.</p>
     </div>
     <div class="project-layout">
       <div>
@@ -300,7 +310,7 @@
 
 <section id="skills">
   <div class="section-inner">
-    <div class="section-index"><span class="num">03</span><span class="label">At a Glance</span></div>
+    <div class="section-index reveal"><span class="num">03</span><span class="label">At a Glance</span></div>
     <div class="skills-index">
       <div>
         <div class="skill-row">
@@ -332,9 +342,9 @@
 
 <section id="contact">
   <div class="section-inner contact-inner">
-    <div class="section-index" style="justify-content:center;"><span class="num">04</span><span class="label">Get In Touch</span></div>
-    <h2>Let's talk.</h2>
-    <p>Open to internships, collaborations, and anything that involves wiring something up.</p>
+    <div class="section-index reveal" style="justify-content:center;"><span class="num">04</span><span class="label">Get In Touch</span></div>
+    <h2 class="reveal">Let's talk.</h2>
+    <p class="reveal" style="transition-delay:.08s">Open to internships, collaborations, and anything that involves wiring something up.</p>
     <a class="big-email" href="mailto:venuprasadd.mk08@gmail.com">venuprasadd.mk08@gmail.com</a>
     <div class="social-row">
       <a href="https://www.linkedin.com/in/venuprasadd-mk-3a3535425/" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn">
@@ -369,6 +379,17 @@
       navToggle.setAttribute('aria-expanded', false);
     });
   });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
 </script>
 
 </body>
